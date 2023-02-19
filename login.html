@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#fdc405"/>
+    <title>Login | Safety Pin</title>
+    <link rel="shortcut icon" type="image/png" href="HOMEICON/48.png"/>
+    <link rel="apple-touch-icon" href="HOMEICON/192.png">
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/fonts/ionicons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="assets/css/Login-Form-Clean.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="manifest" href="/manifest.json">
+    <style type="text/css">
+    /* width */
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1; 
+    }
+     
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+      background: #888; 
+      border-radius: 50px;
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+      background: #555;
+    }
+    img[src="https://cdn.000webhost.com/000webhost/logo/footer-powered-by-000webhost-white2.png"]{display:none;}
+    </style>
+</head>
+
+<body>
+<script type="text/javascript">
+        //added load once
+        function reloadIt() {
+            if (window.location.href.substr(-2) !== "?r") {
+                window.location = window.location.href + "?r";
+            }
+        setTimeout('reloadIt()', 0)(); //changed to 0 ms
+        }
+        //^ added nilipat setTimeout inside function
+        //end load once
+</script>
+<script>
+     if ('serviceWorker' in navigator) { //service-worker for add to home screen
+        console.log("Will the service worker register?");
+        navigator.serviceWorker.register('OneSignalSDKWorker.js')
+        
+          .then(function(reg){
+            console.log("Yes, it did.");
+       
+         }).catch(function(err) {
+            console.log("No it didn't. This happened:", err)
+        });
+     }
+</script>
+
+    <div class="login-clean">
+        <center>
+        <form method="post">
+            <h2 class="sr-only">Login</h2>
+            <div class="illustration"><img src="assets/img/login-logo.png" alt="Safety Pin"></div> <!--added icon-->
+            <div class="form-group">
+                <div class="error-response"> </div>
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="text" id="username" name="username" placeholder="Username" required/>
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="password" id="password" name="password" placeholder="Password" autocomplete="off" required/>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary btn-block" id="login" type="button" data-bs-hover-animate="shake">Log In</button>
+            </div><a href="forgot-password.php" class="forgot">Forgot your password? Click here!</a></form>
+            <a href="create-account.html" class="forgot">Create an account</a>
+        </center>
+    </div>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <!-- <script src="assets/js/bs-animation.js"></script> -->
+
+    <script type="text/javascript">
+
+        //added if (page is redirected by forward/back navigation in browser) will reload the page
+        var perfEntries = performance.getEntriesByType("navigation");
+        if (perfEntries[0].type === "back_forward") {
+            location.reload(true); 
+        }
+        //end reload when back_forward
+
+        $('#login').click(function() {
+
+                $.ajax({
+
+                        type: "POST",
+                        url: "api/auth",
+                        processData: false,
+                        contentType: "application/json",
+                        data: '{ "username": "'+ $("#username").val() +'", "password": "'+ $("#password").val() +'" }',
+                        success: function(r) {
+                                console.log(r)
+                                window.location.assign('index.php');  
+     
+                        },
+                        error: function(r) {
+                                setTimeout(function() {
+                                $('[data-bs-hover-animate]').removeClass('animated ' + $('[data-bs-hover-animate]').attr('data-bs-hover-animate'));
+                                }, 2000)
+                                $('[data-bs-hover-animate]').addClass('animated ' + $('[data-bs-hover-animate]').attr('data-bs-hover-animate'))
+                                console.log(r)
+                                $('.error-response').html(
+                                        '<p style="color: red;"><i>Incorrect Username or Password!</i></p>')
+                        }
+
+                });
+
+
+        });        
+    </script>
+</body>
+</html>

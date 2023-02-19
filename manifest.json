@@ -1,0 +1,36 @@
+{
+  "short_name": "Safety Pin",
+  "name": "Safety Pin",
+  "theme_color": "#fdc405",
+  "background_color": "#fdc405",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "HOMEICON/48.png",
+      "type": "image/png",
+      "sizes": "48x48"
+    },
+    {
+      "src": "HOMEICON/96.png",
+      "type": "image/png",
+      "sizes": "96x96"
+    },
+    {
+      "src": "HOMEICON/144.png",
+      "type": "image/png",
+      "sizes": "144x144"
+    },
+    {
+      "src": "HOMEICON/192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "maskable"
+    },
+    {
+      "src": "HOMEICON/512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/"
+}

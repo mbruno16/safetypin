@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="-1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#fdc405"/>
+    <title>Create Account | Safety Pin</title>
+    <link rel="shortcut icon" type="image/png" href="HOMEICON/48.png"/>
+    <link rel="apple-touch-icon" href="HOMEICON/192.png">
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/fonts/ionicons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="assets/css/Login-Form-Clean.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <style type="text/css">
+    /* width */
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1; 
+    }
+     
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+      background: #888; 
+      border-radius: 50px;
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+      background: #555;
+    }
+    
+    img[src="https://cdn.000webhost.com/000webhost/logo/footer-powered-by-000webhost-white2.png"]{display:none;}
+    </style>
+</head>
+
+<body>
+    <div class="login-clean">
+    <center>
+        <form method="post">
+            <h2 class="sr-only">Create Account</h2>
+            <div class="illustration"><img src="assets/img/login-logo.png" alt="Safety Pin"></div>
+            <div class="form-group">
+                <div class="error-response"> </div>
+            </div>
+            <div class="form-group">
+                <input class="form-control" id="fullname" type="text" name="fullname" placeholder="Full Name" required/>
+            </div>
+            <div class="form-group">
+                <input class="form-control" id="username" type="text" name="username" placeholder="Username" required/>
+            </div>
+            <div class="form-group">
+                <input class="form-control" id="email" type="email" name="email" placeholder="Email" required/>
+            </div>
+            <div class="form-group">
+                <input class="form-control" id="cnumber" type="tel" name="cnumber" placeholder="Mobile Number" maxlength="11" required/>
+            </div>
+            <div class="form-group">
+                <input class="form-control" id="password" type="password" name="password" placeholder="Password" required/>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary btn-block" id="ca" type="button" data-bs-hover-animate="shake">Create Account</button>
+            </div><a href="login.html" class="forgot">Already got an account? Click here!</a></form>
+    </center>
+    </div>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $('#ca').click(function() {
+
+                $.ajax({
+
+                        type: "POST",
+                        url: "api/users",
+                        processData: false,
+                        contentType: "application/json",
+                        data: '{ "username": "'+ $("#username").val() +'", "fullname": "'+ $("#fullname").val() +'", "email": "'+ $("#email").val() +'", "cnumber": "'+ $("#cnumber").val() +'", "password": "'+ $("#password").val() +'" }',
+                        success: function(r) {
+                                alert('Go to your email to check the confirmation of your account creation.')
+                                location.replace('login.html')                              
+                        },
+                        error: function(xhr, status, error) {
+                                setTimeout(function() {
+                                $('[data-bs-hover-animate]').removeClass('animated ' + $('[data-bs-hover-animate]').attr('data-bs-hover-animate'));
+                                }, 2000)
+                                $('[data-bs-hover-animate]').addClass('animated ' + $('[data-bs-hover-animate]').attr('data-bs-hover-animate')) 
+                                $('.error-response').html(
+                                        '<p style="color: red;"><i>'+xhr.responseText+'</i></p>')
+                                
+                        }
+                        
+                });
+
+        });
+    </script>
+</body>
+
+</html>
